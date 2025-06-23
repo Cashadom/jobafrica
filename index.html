@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JobMatch Africa - Tinder de l'emploi</title>
+    <title>JobAfrica - Tinder de l'emploi</title>
     <style>
         * {
             margin: 0;
@@ -40,6 +40,8 @@
             border-radius: 30px;
             overflow: hidden;
             position: relative;
+            display: flex;
+            flex-direction: column;
         }
 
         .header {
@@ -49,9 +51,7 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid #e9ecef;
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            flex-shrink: 0;
         }
 
         .back-btn {
@@ -74,19 +74,16 @@
             color: #212529;
         }
 
-        .edit-btn {
-            color: #ffc107;
-            font-weight: 600;
-            text-decoration: none;
-            padding: 8px 15px;
-            border-radius: 20px;
-            transition: all 0.3s ease;
+        .logo-img {
+            height: 45px;
+            width: auto;
         }
 
         .content {
-            height: calc(100% - 70px);
+            flex: 1;
             overflow-y: auto;
             padding: 20px;
+            padding-bottom: 100px; /* Plus d'espace pour éviter que le contenu soit caché par les boutons */
         }
 
         .profile-header {
@@ -152,15 +149,21 @@
             margin-bottom: 15px;
         }
 
-        .job-type {
-            background: #17a2b8;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
+        /* Correction: séparer les badges en deux lignes */
+        .job-info {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .job-search-row {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            color: #17a2b8;
             font-weight: 600;
             font-size: 14px;
-            display: inline-block;
-            margin-right: 8px;
         }
 
         .availability {
@@ -170,7 +173,6 @@
             border-radius: 20px;
             font-weight: 600;
             font-size: 14px;
-            display: inline-block;
         }
 
         .stats-row {
@@ -189,17 +191,38 @@
             border: 1px solid #e9ecef;
         }
 
-        .stat-number {
-            font-size: 20px;
-            font-weight: 800;
-            color: #ffc107;
+        .stat-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: #212529;
             display: block;
+            margin-bottom: 5px;
         }
 
         .stat-label {
             font-size: 12px;
             color: #6c757d;
-            margin-top: 2px;
+        }
+
+        .virtues-list {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .virtue-item {
+            font-size: 14px;
+            font-weight: 600;
+            color: #212529;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .virtue-item::before {
+            content: '•';
+            color: #ffc107;
+            font-weight: bold;
         }
 
         .section {
@@ -368,14 +391,17 @@
         }
 
         .action-buttons {
-            position: sticky;
+            position: absolute;
             bottom: 0;
+            left: 15px;
+            right: 15px;
             background: white;
             padding: 15px 20px;
             border-top: 1px solid #e9ecef;
             display: flex;
             gap: 15px;
             justify-content: space-between;
+            border-radius: 0 0 30px 30px;
         }
 
         .action-btn {
@@ -448,7 +474,7 @@
             <div class="header">
                 <button class="back-btn">←</button>
                 <div class="header-title">Profil Candidat</div>
-                <a href="#" class="edit-btn">Modifier</a>
+                <img src="https://i.ibb.co/F4KZLpL2/6c09bb12-b583-4d09-a5f6-6b0024eff1d0.png" alt="JobAfrica Logo" class="logo-img">
             </div>
 
             <!-- Content -->
@@ -462,8 +488,10 @@
                     <div class="name">Aminata Kone</div>
                     <div class="title">Développeuse Full-Stack React/Node.js</div>
                     <div class="location">📍 Abidjan, Côte d'Ivoire</div>
-                    <div style="margin-top: 10px;">
-                        <span class="job-type">CDI</span>
+                    <div class="job-info">
+                        <div class="job-search-row">
+                            Recherche CDI
+                        </div>
                         <span class="availability">Disponible immédiatement</span>
                     </div>
                 </div>
@@ -471,16 +499,19 @@
                 <!-- Stats -->
                 <div class="stats-row">
                     <div class="stat-card">
-                        <span class="stat-number">4</span>
-                        <span class="stat-label">Ans d'exp.</span>
+                        <span class="stat-value">4 ans</span>
+                        <span class="stat-label">Expérience</span>
                     </div>
                     <div class="stat-card">
-                        <span class="stat-number">15</span>
-                        <span class="stat-label">Projets</span>
+                        <div class="virtues-list">
+                            <div class="virtue-item">Réactive</div>
+                            <div class="virtue-item">Autonome</div>
+                            <div class="virtue-item">Ponctuelle</div>
+                        </div>
                     </div>
                     <div class="stat-card">
-                        <span class="stat-number">98%</span>
-                        <span class="stat-label">Taux réussite</span>
+                        <span class="stat-value">Véhiculée</span>
+                        <span class="stat-value">Mobilité nationale</span>
                     </div>
                 </div>
 
