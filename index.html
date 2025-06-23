@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobMatch Africa - Tinder de l'emploi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f8f9fa;
+            min-height: 100vh;
+            color: #212529;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* Version Mobile */
+        .mobile-version {
+            width: 380px;
+            height: 750px;
+            background: #212529;
+            border-radius: 40px;
+            padding: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .screen {
+            width: 100%;
+            height: 100%;
+            background: #f8f9fa;
+            border-radius: 30px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .header {
+            background: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e9ecef;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .back-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            color: #212529;
+        }
+
+        .header-title {
+            font-weight: 700;
+            font-size: 18px;
+            color: #212529;
+        }
+
+        .edit-btn {
+            color: #ffc107;
+            font-weight: 600;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .content {
+            height: calc(100% - 70px);
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .profile-header {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e9ecef;
+            text-align: center;
+            position: relative;
+        }
+
+        .profile-pic {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ffc107, #ffcd39);
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            font-weight: bold;
+            color: #212529;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-pic img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .status-indicator {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            width: 20px;
+            height: 20px;
+            background: #28a745;
+            border-radius: 50%;
+            border: 3px solid white;
+        }
+
+        .name {
+            font-size: 24px;
+            font-weight: 800;
+            color: #212529;
+            margin-bottom: 5px;
+        }
+
+        .title {
+            color: #6c757d;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .location {
+            color: #6c757d;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .job-type {
+            background: #17a2b8;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 14px;
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+        .availability {
+            background: #28a745;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .stats-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            flex: 1;
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e9ecef;
+        }
+
+        .stat-number {
+            font-size: 20px;
+            font-weight: 800;
+            color: #ffc107;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #6c757d;
+            margin-top: 2px;
+        }
+
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e9ecef;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #212529;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-icon {
+            font-size: 20px;
+        }
+
+        .about-text {
+            color: #6c757d;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .skill-tag {
+            background: #ffc107;
+            color: #212529;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .skill-level {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .skill-name {
+            font-weight: 600;
+            color: #212529;
+            font-size: 14px;
+        }
+
+        .skill-bar {
+            flex: 1;
+            height: 6px;
+            background: #e9ecef;
+            border-radius: 3px;
+            margin: 0 15px;
+            overflow: hidden;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: #ffc107;
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        .skill-percent {
+            font-size: 12px;
+            color: #6c757d;
+            font-weight: 600;
+        }
+
+        .experience-item {
+            border-left: 3px solid #ffc107;
+            padding-left: 15px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .experience-item::before {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 0;
+            width: 9px;
+            height: 9px;
+            background: #ffc107;
+            border-radius: 50%;
+        }
+
+        .exp-title {
+            font-weight: 700;
+            color: #212529;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .exp-company {
+            color: #6c757d;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .exp-duration {
+            color: #6c757d;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+
+        .exp-description {
+            color: #6c757d;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .education-item {
+            margin-bottom: 15px;
+        }
+
+        .edu-degree {
+            font-weight: 700;
+            color: #212529;
+            font-size: 15px;
+        }
+
+        .edu-school {
+            color: #6c757d;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .edu-year {
+            color: #6c757d;
+            font-size: 12px;
+        }
+
+        .language-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .language-name {
+            font-weight: 600;
+            color: #212529;
+        }
+
+        .language-level {
+            background: #f8f9fa;
+            color: #6c757d;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            border: 1px solid #e9ecef;
+        }
+
+        .action-buttons {
+            position: sticky;
+            bottom: 0;
+            background: white;
+            padding: 15px 20px;
+            border-top: 1px solid #e9ecef;
+            display: flex;
+            gap: 15px;
+            justify-content: space-between;
+        }
+
+        .action-btn {
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-pass {
+            width: 50px;
+            background: transparent;
+            color: #212529;
+            border: 2px solid #212529;
+            font-size: 18px;
+        }
+
+        .btn-like {
+            flex: 1;
+            background: transparent;
+            color: #212529;
+            border: 2px solid #212529;
+        }
+
+        .btn-message {
+            flex: 1;
+            background: #ffc107;
+            color: #212529;
+        }
+
+        .content::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .content::-webkit-scrollbar-thumb {
+            background: #e9ecef;
+            border-radius: 2px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .section:nth-child(1) { animation-delay: 0.1s; }
+        .section:nth-child(2) { animation-delay: 0.2s; }
+        .section:nth-child(3) { animation-delay: 0.3s; }
+        .section:nth-child(4) { animation-delay: 0.4s; }
+        .section:nth-child(5) { animation-delay: 0.5s; }
+    </style>
+</head>
+<body>
+    <div class="mobile-version">
+        <div class="screen">
+            <!-- Header -->
+            <div class="header">
+                <button class="back-btn">←</button>
+                <div class="header-title">Profil Candidat</div>
+                <a href="#" class="edit-btn">Modifier</a>
+            </div>
+
+            <!-- Content -->
+            <div class="content">
+                <!-- Profile Header -->
+                <div class="profile-header">
+                    <div class="profile-pic">
+                        <img src="https://i.ibb.co/wVyMVXs/20250623-1428-image.png" alt="Photo de profil">
+                        <div class="status-indicator"></div>
+                    </div>
+                    <div class="name">Aminata Kone</div>
+                    <div class="title">Développeuse Full-Stack React/Node.js</div>
+                    <div class="location">📍 Abidjan, Côte d'Ivoire</div>
+                    <div style="margin-top: 10px;">
+                        <span class="job-type">CDI</span>
+                        <span class="availability">Disponible immédiatement</span>
+                    </div>
+                </div>
+
+                <!-- Stats -->
+                <div class="stats-row">
+                    <div class="stat-card">
+                        <span class="stat-number">4</span>
+                        <span class="stat-label">Ans d'exp.</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">15</span>
+                        <span class="stat-label">Projets</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">98%</span>
+                        <span class="stat-label">Taux réussite</span>
+                    </div>
+                </div>
+
+                <!-- About -->
+                <div class="section">
+                    <div class="section-title">
+                        <span class="section-icon">👋</span>
+                        À propos
+                    </div>
+                    <div class="about-text">
+                        Développeuse passionnée avec 4 ans d'expérience en développement web. Spécialisée dans les technologies React, Node.js et les solutions cloud. Diplômée en génie informatique, j'ai travaillé sur des projets fintech et e-commerce pour des startups africaines.
+                    </div>
+                </div>
+
+                <!-- Skills -->
+                <div class="section">
+                    <div class="section-title">
+                        <span class="section-icon">⚡</span>
+                        Compétences techniques
+                    </div>
+                    <div class="skill-level">
+                        <span class="skill-name">React/Redux</span>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 90%"></div>
+                        </div>
+                        <span class="skill-percent">90%</span>
+                    </div>
+                    <div class="skill-level">
+                        <span class="skill-name">Node.js/Express</span>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 85%"></div>
+                        </div>
+                        <span class="skill-percent">85%</span>
+                    </div>
+                    <div class="skill-level">
+                        <span class="skill-name">MongoDB/PostgreSQL</span>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 80%"></div>
+                        </div>
+                        <span class="skill-percent">80%</span>
+                    </div>
+                    <div class="skill-level">
+                        <span class="skill-name">AWS/Docker</span>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 75%"></div>
+                        </div>
+                        <span class="skill-percent">75%</span>
+                    </div>
+                    
+                    <div style="margin-top: 15px;">
+                        <div class="skills-grid">
+                            <span class="skill-tag">JavaScript</span>
+                            <span class="skill-tag">TypeScript</span>
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">Git</span>
+                            <span class="skill-tag">Agile</span>
+                            <span class="skill-tag">REST API</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Experience -->
+                <div class="section">
+                    <div class="section-title">
+                        <span class="section-icon">💼</span>
+                        Expérience professionnelle
+                    </div>
+                    <div class="experience-item">
+                        <div class="exp-title">Développeuse Full-Stack Senior</div>
+                        <div class="exp-company">PayTech Solutions</div>
+                        <div class="exp-duration">Jan 2022 - Présent (2 ans)</div>
+                        <div class="exp-description">
+                            Développement d'une plateforme de paiement mobile pour 5 pays d'Afrique de l'Ouest. Stack React/Node.js, intégration Mobile Money, 500K+ utilisateurs actifs.
+                        </div>
+                    </div>
+                    <div class="experience-item">
+                        <div class="exp-title">Développeuse Frontend</div>
+                        <div class="exp-company">E-Shop Africa</div>
+                        <div class="exp-duration">Juin 2020 - Déc 2021 (1.5 ans)</div>
+                        <div class="exp-description">
+                            Création d'interfaces e-commerce responsive avec React. Optimisation des performances, A/B testing, +40% de conversions.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Education -->
+                <div class="section">
+                    <div class="section-title">
+                        <span class="section-icon">🎓</span>
+                        Formation
+                    </div>
+                    <div class="education-item">
+                        <div class="edu-degree">Master en Génie Informatique</div>
+                        <div class="edu-school">INPHB Yamoussoukro</div>
+                        <div class="edu-year">2018 - 2020</div>
+                    </div>
+                    <div class="education-item">
+                        <div class="edu-degree">Licence Informatique</div>
+                        <div class="edu-school">Université Félix Houphouët-Boigny</div>
+                        <div class="edu-year">2015 - 2018</div>
+                    </div>
+                </div>
+
+                <!-- Languages -->
+                <div class="section">
+                    <div class="section-title">
+                        <span class="section-icon">🌍</span>
+                        Langues
+                    </div>
+                    <div class="language-item">
+                        <span class="language-name">Français</span>
+                        <span class="language-level">Natif</span>
+                    </div>
+                    <div class="language-item">
+                        <span class="language-name">Anglais</span>
+                        <span class="language-level">Courant</span>
+                    </div>
+                    <div class="language-item">
+                        <span class="language-name">Baoulé</span>
+                        <span class="language-level">Natif</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="action-btn btn-pass">✕</button>
+                <button class="action-btn btn-like">💚 Liker</button>
+                <button class="action-btn btn-message">💬 Message</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate skill bars
+            const skillBars = document.querySelectorAll('.skill-progress');
+            skillBars.forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0%';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 500);
+            });
+
+            // Action buttons
+            const likeBtn = document.querySelector('.btn-like');
+            const messageBtn = document.querySelector('.btn-message');
+            const passBtn = document.querySelector('.btn-pass');
+
+            likeBtn.addEventListener('click', function() {
+                this.innerHTML = '✅ Liké !';
+                this.style.background = '#28a745';
+                this.style.color = 'white';
+                this.style.border = '2px solid #28a745';
+                
+                setTimeout(() => {
+                    this.innerHTML = '💚 Liker';
+                    this.style.background = 'transparent';
+                    this.style.color = '#212529';
+                    this.style.border = '2px solid #212529';
+                }, 2000);
+            });
+
+            messageBtn.addEventListener('click', function() {
+                this.innerHTML = '📨 Envoyé !';
+                setTimeout(() => {
+                    this.innerHTML = '💬 Message';
+                }, 2000);
+            });
+
+            passBtn.addEventListener('click', function() {
+                this.innerHTML = '✕ Passé';
+                this.style.background = '#dc3545';
+                this.style.color = 'white';
+                this.style.border = '2px solid #dc3545';
+                
+                setTimeout(() => {
+                    this.innerHTML = '✕';
+                    this.style.background = 'transparent';
+                    this.style.color = '#212529';
+                    this.style.border = '2px solid #212529';
+                }, 2000);
+            });
+
+            // Back button
+            document.querySelector('.back-btn').addEventListener('click', function() {
+                alert('Retour à la liste des candidats');
+            });
+        });
+    </script>
+</body>
+</html>
